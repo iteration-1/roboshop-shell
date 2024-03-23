@@ -19,7 +19,7 @@ unzip /tmp/frontend.zip &>>${LOG}
 status_check
 
 print_head "copy config file"
-cp  ${script_location}/roboshop.conf /etc/nginx/default.d/roboshop.conf
+cp  ${script_location}/files/roboshop.conf /etc/nginx/default.d/roboshop.conf
 status_check
 
 systemd
