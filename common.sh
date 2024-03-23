@@ -1,5 +1,5 @@
-LOG = /tmp/roboshop.log
-script_location = $(pwd)
+LOG=/tmp/roboshop.log
+script_location=$(pwd)
 
 print_head(){
   echo -e "\e[35m $1 \e[0m"
