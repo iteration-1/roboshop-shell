@@ -18,13 +18,13 @@ status_check
 
 print_head "make app dir"
 mkdir -p /app
-rm -rf /app/* &>>${LOG}
 status_check
 
 
 print_head "download app dir and unzip"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${LOG}
 cd /app
+rm -rf /app/* &>>${LOG}
 unzip /tmp/catalogue.zip &>>${LOG}
 status_check
 
