@@ -18,6 +18,7 @@ status_check
 
 print_head "make app dir"
 mkdir -p /app
+rm -rf /app/* &>>${LOG}
 status_check
 
 
