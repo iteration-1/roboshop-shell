@@ -14,6 +14,10 @@ status_check(){
 }
 
 systemd() {
+  print_head "copy config file"
+  cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service &>>${LOG}
+  status_check
+
   print_head "daemon reload"
   systemctl daemon-reload
 
@@ -24,6 +28,28 @@ systemd() {
   systemctl restart ${component}
 }
 
+
+app_req() {
+   print_head "add roboshop user"
+    id roboshop &>>${LOG}
+    if [ $? -ne 0 ]; then
+      useradd roboshop &>>${LOG}
+    fi
+    status_check
+
+    print_head "make app dir"
+    mkdir -p /app
+    status_check
+
+
+    print_head "download app dir and unzip"
+    curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${LOG}
+    cd /app
+    rm -rf /app/* &>>${LOG}
+    unzip /tmp/${component}.zip &>>${LOG}
+    status_check
+
+}
 nodejs() {
   print_head "disable and enable nodejs"
   dnf module disable nodejs -y &>>${LOG}
@@ -34,30 +60,41 @@ nodejs() {
   dnf install nodejs -y
   status_check
 
-  print_head "add roboshop user"
-  id roboshop &>>${LOG}
-  if [ $? -ne 0 ]; then
-    useradd roboshop &>>${LOG}
-  fi
-  status_check
-
-  print_head "make app dir"
-  mkdir -p /app
-  status_check
-
-
-  print_head "download app dir and unzip"
-  curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${LOG}
-  cd /app
-  rm -rf /app/* &>>${LOG}
-  unzip /tmp/${component}.zip &>>${LOG}
-  status_check
+  app_req
 
   print_head "npm install"
   npm install &>>${LOG}
   status_check
 
-  print_head "copy config file"
-  cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service &>>${LOG}
+}
+
+maven() {
+   print_head "Install Maven"
+   dnf install maven -y &>>${LOG}
+   status_check
+
+
+  app_req
+
+
+  print_head "clean packahes and move jar file"
+  cd /app
+  mvn clean package &>>${LOG}
+  mv target/shipping-1.0.jar shipping.jar &>>${LOG}
   status_check
+
+}
+
+python() {
+  print_head "install python"
+  dnf install python36 gcc python3-devel -y &>>${LOG}
+  status_check
+
+  app_req
+
+  print_head "pip install"
+  cd /app
+  pip3.6 install -r requirements.txt &>>${LOG}
+  status_check
+
 }
