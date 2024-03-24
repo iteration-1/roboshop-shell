@@ -12,7 +12,7 @@ print_head "install rabbitmq"
 dnf install rabbitmq-server -y &>>${LOG}
 status_check
 
-print_head"enable and restart rabbitmq"
+print_head "enable and restart rabbitmq"
 systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
 status_check
