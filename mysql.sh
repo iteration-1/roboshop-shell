@@ -1,7 +1,7 @@
 source common.sh
 
 print_head "disable mysql"
-dnf install mysql-community-server -y &>>${LOG}
+dnf module disable mysql -y  &>>${LOG}
 status_check
 
 print_head "copy mysql repo"
