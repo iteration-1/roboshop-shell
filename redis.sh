@@ -16,5 +16,9 @@ print_head "update listening address"
 sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/redis.conf /etc/redis/redis.conf
 status_check
 
-systemd
+print_head "enable redis"
+systemctl enable redis
+
+print_head "restart redis"
+systemctl restart redis
 
