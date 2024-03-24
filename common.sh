@@ -57,7 +57,7 @@ nodejs() {
   status_check
 
   print_head "Install nodejs"
-  dnf install nodejs -y
+  dnf install nodejs -y &>>${LOG}
   status_check
 
   app_req
