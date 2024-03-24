@@ -50,6 +50,8 @@ app_req() {
     status_check
 
 }
+
+
 nodejs() {
   print_head "disable and enable nodejs"
   dnf module disable nodejs -y &>>${LOG}

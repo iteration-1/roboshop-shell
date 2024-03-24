@@ -12,7 +12,7 @@ dnf install mongodb-org-shell -y &>>${LOG}
 status_check
 
 print_head "load schema"
-mongo --host mongodb-dev.pappik.online </app/schema/catalogue.js
+mongo --host mongodb-dev.pappik.online </app/schema/catalogue.js &>>${LOG}
 status_check
 
 systemd
