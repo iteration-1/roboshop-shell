@@ -1,3 +1,5 @@
+source common.sh
+
 print_head "configure repos"
 curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>>${LOG}
 status_check
