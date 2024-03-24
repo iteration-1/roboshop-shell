@@ -14,7 +14,7 @@ status_check(){
 }
 
 systemd() {
-  print_head "copy config file"
+  print_head "copy service file"
   cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service &>>${LOG}
   status_check
 

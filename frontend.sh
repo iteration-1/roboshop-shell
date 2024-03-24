@@ -22,4 +22,8 @@ print_head "copy config file"
 cp  ${script_location}/files/roboshop.conf /etc/nginx/default.d/roboshop.conf
 status_check
 
-systemd
+print_head "enable nginx"
+systemctl enable nginx
+
+print_head "restart nginx"
+systemctl restart nginx
